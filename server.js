@@ -15,7 +15,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/Projects", {
   useNewUrlParser: true,
   useFindAndModify: false,
-hero
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 app.use(routes);
