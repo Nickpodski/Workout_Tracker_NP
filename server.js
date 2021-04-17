@@ -3,9 +3,6 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const routes = require('./routes');
-require('dotenv').config();
-
-const PORT = process.env.PORT || 3000
 
 const app = express();
 
@@ -15,11 +12,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(process.env.MONGOD_URI, {
-    useNewUrlParser: true,
-    useFindAndModify: false
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/Projects", {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 app.use(routes);
 
-app.listen(PORT, () => console.log(`Now listening on ${PORT}`))
+app.listen(process.env.PORT || 3000, () => console.log('Now listening'));
